@@ -1,0 +1,84 @@
+---
+title: "Formatting_files"
+author: "Eduardo Salmerón Castaño"
+date: "19/6/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Blackmore
+
+```{r}
+library(carData)
+bm = carData::Blackmore
+str(bm)
+```
+
+```{r}
+names(bm)[4] <- 'PHENO'
+
+levels(bm$PHENO) <- c(0,1)
+
+str(bm)
+```
+
+```{r}
+names(bm)[1] <- 'ID'
+bm
+```
+
+
+```{r}
+table(bm$PHENO)
+```
+
+
+```{r}
+write.csv(bm, '/home/edusal/data/dataForML/bm.csv')
+```
+
+## PimaIndiansDiabetes
+
+```{r}
+data(PimaIndiansDiabetes)
+str(PimaIndiansDiabetes)
+```
+
+
+```{r}
+names(PimaIndiansDiabetes)[9] <- 'PHENO'
+str(PimaIndiansDiabetes)
+```
+
+```{r}
+PimaIndiansDiabetes['ID'] <- 1:nrow(PimaIndiansDiabetes)
+str(PimaIndiansDiabetes)
+```
+
+```{r}
+write.csv(PimaIndiansDiabetes, '/home/edusal/data/dataForML/pid.csv')
+```
+
+## Sonar
+
+```{r}
+data('Sonar')
+str(Sonar)
+```
+
+```{r}
+names(Sonar)[61] <- 'PHENO'
+str(Sonar)
+```
+
+```{r}
+Sonar['ID'] <- 1:nrow(Sonar)
+str(Sonar)
+```
+
+```{r}
+write.csv(Sonar, '/home/edusal/data/dataForML/sonar.csv')
+```

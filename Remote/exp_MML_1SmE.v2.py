@@ -99,8 +99,6 @@ for n in range(n_repeats):
     except FileExistsError:
         pass
 
-    manager_mml = MML_1SmE(actual_path + prefix)
-
     # Divide train-test datasets
     dataForML_train, dataForML_test = model_selection.train_test_split(genoTrain_df, test_size=test_size, random_state=seed)
 
@@ -109,14 +107,34 @@ for n in range(n_repeats):
     # Move data
     mlu.move_data(path2output + prefix, actual_path + prefix)
 
+    manager_mml = MML_1SmE(actual_path + prefix)
+
     # Generate level 1 experts
-    manager_mml.gen_experts(path=actual_path, expert_names=algorithms, prefix=train_prefix, metric_max=metric, seed=seed, metric_tune=metric, max_tune=tune_iterations)
+    manager_mml.gen_experts(path=actual_path,
+                            expert_names=algorithms,
+                            prefix=train_prefix,
+                            metric_max=metric,
+                            seed=seed,
+                            metric_tune=metric,
+                            max_tune=tune_iterations)
 
     # Generate level 2 expert
-    manager_mml.gen_meta_expert(data=dataForML_test, path=actual_path, experts_names=algorithms, prefix=meta_prefix, metric_max=metric, algs=algorithms_names, seed=seed, metric_tune=metric, max_tune=tune_iterations)
+    manager_mml.gen_meta_expert(data=dataForML_test,
+                                path=actual_path,
+                                experts_names=algorithms,
+                                prefix=meta_prefix,
+                                metric_max=metric,
+                                algs=algorithms_names,
+                                seed=seed,
+                                metric_tune=metric,
+                                max_tune=tune_iterations)
 
     # Predict test set
-    balacc = manager_mml.predict(test_df, actual_path, algorithms, meta_prefix, n)
+    balacc = manager_mml.predict(data=test_df,
+                                 path=actual_path,
+                                 experts_names=algorithms,
+                                 meta_prefix=meta_prefix,
+                                 iteration=n)
     test_results.append(balacc)
 
     # Change output names and directory

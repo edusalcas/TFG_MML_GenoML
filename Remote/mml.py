@@ -1,3 +1,4 @@
+
 import pandas as pd
 import genoml_utils as gml
 import os
@@ -66,11 +67,22 @@ class MML(ABC):
         self.meta_expert_columns = meta_columns
 
     @abstractmethod
-    def gen_experts(self, path, expert_names=None, prefix=None, metric_max=None, seed=None, metric_tune=None, max_tune=None, algs=None):
+    def gen_experts(self,
+                    path, 
+                    expert_names=None, 
+                    prefix=None, 
+                    metric_max=None, 
+                    seed=None, 
+                    metric_tune=None, 
+                    max_tune=None, 
+                    algs=None):
         pass
 
     @abstractmethod
-    def gen_metaset(self, data, experts_path, experts_names):
+    def gen_metaset(self, 
+                    data, 
+                    experts_path, 
+                    experts_names):
         pass
 
     def gen_pred_metaset(self, data, experts_path, experts_names, path, meta_prefix):
